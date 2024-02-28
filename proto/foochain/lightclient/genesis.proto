@@ -1,0 +1,12 @@
+syntax = "proto3";
+package foochain.lightclient;
+
+import "gogoproto/gogo.proto";
+import "foochain/lightclient/params.proto";
+
+option go_package = "foochain/x/lightclient/types";
+
+// GenesisState defines the lightclient module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}

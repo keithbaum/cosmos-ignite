@@ -1,0 +1,14 @@
+syntax = "proto3";
+package foochain.lightclient;
+
+option go_package = "foochain/x/lightclient/types";
+
+// Proof represents a Merkle proof.
+message Proof {
+  // TODO: implement
+}
+
+// TxData represents the data contained in a transaction.
+message TxData {
+  // TODO: implement
+}

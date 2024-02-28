@@ -19,3 +19,21 @@
 
 # Go workspace file
 go.work
+=======
+# IDE files
+.idea/
+*.iml
+
+# Mac OS files
+.DS_Store
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Other common files to exclude
+*.swp
+*.bak
+*.tmp
+*~
