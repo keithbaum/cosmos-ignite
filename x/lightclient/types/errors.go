@@ -8,5 +8,7 @@ import (
 
 // x/lightclient module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrSample             = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrInvalidBlockHeight = sdkerrors.Register(ModuleName, 1101, "invalid block height")
+	ErrInvalidMerkleRoot  = sdkerrors.Register(ModuleName, 1102, "invalid merkle root")
 )
