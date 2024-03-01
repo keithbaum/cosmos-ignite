@@ -541,7 +541,7 @@ func New(
 		app.GetSubspace(foomoduletypes.ModuleName),
 		app.LightclientKeeper,
 	)
-	fooModule := foomodule.NewAppModule(appCodec, app.FooKeeper, app.AccountKeeper, app.BankKeeper)
+	fooModule := foomodule.NewAppModule(appCodec, app.FooKeeper, app.AccountKeeper, app.BankKeeper, app.LightclientKeeper)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
