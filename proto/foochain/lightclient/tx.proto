@@ -4,4 +4,18 @@ package foochain.lightclient;
 option go_package = "foochain/x/lightclient/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  // Store External Chain 1 Tx details
+  rpc StoreExternalChain1BlockMerleRoot(StoreExternalChain1BlockMerleRootRequest) returns (StoreExternalChain1BlockMerleRootResponse);
+}
+
+// Message will come from a trustful source where Tx Merkle Root can be extracted
+message StoreExternalChain1BlockMerleRootRequest {
+  option (cosmos.msg.v1.signer) = "sender";
+
+  int64 block_height = 1;
+  string merkle_root = 2;
+}
+
+// StoreExternalChain1BlockMerleRootResponse for the StoreExternalChain1BlockMerleRoot rpc method
+message StoreExternalChain1BlockMerleRootResponse {}
