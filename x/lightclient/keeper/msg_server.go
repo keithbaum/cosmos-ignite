@@ -27,8 +27,8 @@ func (k msgServer) StoreExternalChain1BlockMerleRoot(goCtx context.Context, msg 
 	}
 
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	var block_height := msg.BlockHeight
-	var merkle_root := msg.MerkleRoot
+	var block_height = msg.BlockHeight
+	var merkle_root = msg.MerkleRoot
 
 	err := k.storeExternalChain1MerkleRoot(ctx, block_height, merkle_root)
 	if err != nil {

@@ -21,10 +21,10 @@ var _ types.MsgServer = msgServer{}
 
 func (k msgServer) VerifyTx(goCtx context.Context, msg *types.VerifyTxRequest) (*types.VerifyTxResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	var tx_hash := msg.TxHash
-	var block_height := msg.BlockHeight
-	var proof := msg.Proof
-	var data := msg.Data
+	var tx_hash = msg.TxHash
+	var block_height = msg.BlockHeight
+	var proof = msg.Proof
+	var data = msg.Data
 
 	verified, err := k.LightclientKeeper.VerifyTx(ctx, tx_hash, block_height, proof, data)
 	if err != nil {

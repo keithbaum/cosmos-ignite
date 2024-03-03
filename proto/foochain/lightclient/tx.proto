@@ -1,6 +1,7 @@
 syntax = "proto3";
 package foochain.lightclient;
 
+import "cosmos_proto/cosmos.proto";
 option go_package = "foochain/x/lightclient/types";
 
 // Msg defines the Msg service.
@@ -11,7 +12,7 @@ service Msg {
 
 // Message will come from a trustful source where Tx Merkle Root can be extracted
 message StoreExternalChain1BlockMerleRootRequest {
-  option (cosmos.msg.v1.signer) = "sender";
+//  option (cosmos.msg.v1.signer) = "sender";
 
   int64 block_height = 1;
   string merkle_root = 2;
