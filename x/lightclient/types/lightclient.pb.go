@@ -24,8 +24,8 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Proof represents a Merkle proof.
 type Proof struct {
-	MerkleRoot []byte   `protobuf:"bytes,1,opt,name=merkle_root,json=merkleRoot,proto3" json:"merkle_root,omitempty"`
-	MerklePath [][]byte `protobuf:"bytes,2,rep,name=merkle_path,json=merklePath,proto3" json:"merkle_path,omitempty"`
+	MerkleRoot string   `protobuf:"bytes,1,opt,name=merkle_root,json=merkleRoot,proto3" json:"merkle_root,omitempty"`
+	MerklePath []string `protobuf:"bytes,2,rep,name=merkle_path,json=merklePath,proto3" json:"merkle_path,omitempty"`
 }
 
 func (m *Proof) Reset()         { *m = Proof{} }
@@ -61,14 +61,14 @@ func (m *Proof) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Proof proto.InternalMessageInfo
 
-func (m *Proof) GetMerkleRoot() []byte {
+func (m *Proof) GetMerkleRoot() string {
 	if m != nil {
 		return m.MerkleRoot
 	}
-	return nil
+	return ""
 }
 
-func (m *Proof) GetMerklePath() [][]byte {
+func (m *Proof) GetMerklePath() []string {
 	if m != nil {
 		return m.MerklePath
 	}
@@ -135,14 +135,14 @@ var fileDescriptor_fbb63f5895efdcd1 = []byte{
 	0xce, 0x48, 0xcc, 0xcc, 0xd3, 0xcf, 0xc9, 0x4c, 0xcf, 0x28, 0x49, 0xce, 0xc9, 0x4c, 0xcd, 0x2b,
 	0x41, 0x66, 0xeb, 0x15, 0x14, 0xe5, 0x97, 0xe4, 0x0b, 0x89, 0xc0, 0xd4, 0xe9, 0x21, 0xc9, 0x29,
 	0x79, 0x72, 0xb1, 0x06, 0x14, 0xe5, 0xe7, 0xa7, 0x09, 0xc9, 0x73, 0x71, 0xe7, 0xa6, 0x16, 0x65,
-	0xe7, 0xa4, 0xc6, 0x17, 0xe5, 0xe7, 0x97, 0x48, 0x30, 0x2a, 0x30, 0x6a, 0xf0, 0x04, 0x71, 0x41,
+	0xe7, 0xa4, 0xc6, 0x17, 0xe5, 0xe7, 0x97, 0x48, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x06, 0x71, 0x41,
 	0x84, 0x82, 0xf2, 0xf3, 0x4b, 0x90, 0x14, 0x14, 0x24, 0x96, 0x64, 0x48, 0x30, 0x29, 0x30, 0x23,
 	0x14, 0x04, 0x24, 0x96, 0x64, 0x28, 0xc9, 0x73, 0xb1, 0x85, 0x54, 0xb8, 0x24, 0x96, 0x24, 0x0a,
 	0x89, 0x72, 0xb1, 0x95, 0x54, 0xc4, 0x67, 0xa6, 0x54, 0x80, 0x8d, 0x61, 0x0e, 0x62, 0x2d, 0xa9,
 	0xf0, 0x4c, 0xa9, 0x70, 0x32, 0x3b, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f,
 	0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28,
 	0x19, 0xb8, 0x1f, 0x2a, 0x50, 0x7c, 0x51, 0x52, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0xf6, 0x80,
-	0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x3d, 0xd7, 0xc3, 0x67, 0xea, 0x00, 0x00, 0x00,
+	0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x2d, 0xaf, 0x77, 0x6d, 0xea, 0x00, 0x00, 0x00,
 }
 
 func (m *Proof) Marshal() (dAtA []byte, err error) {
@@ -234,8 +234,8 @@ func (m *Proof) Size() (n int) {
 		n += 1 + l + sovLightclient(uint64(l))
 	}
 	if len(m.MerklePath) > 0 {
-		for _, b := range m.MerklePath {
-			l = len(b)
+		for _, s := range m.MerklePath {
+			l = len(s)
 			n += 1 + l + sovLightclient(uint64(l))
 		}
 	}
@@ -293,7 +293,7 @@ func (m *Proof) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MerkleRoot", wireType)
 			}
-			var byteLen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowLightclient
@@ -303,31 +303,29 @@ func (m *Proof) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthLightclient
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthLightclient
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MerkleRoot = append(m.MerkleRoot[:0], dAtA[iNdEx:postIndex]...)
-			if m.MerkleRoot == nil {
-				m.MerkleRoot = []byte{}
-			}
+			m.MerkleRoot = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MerklePath", wireType)
 			}
-			var byteLen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowLightclient
@@ -337,23 +335,23 @@ func (m *Proof) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				byteLen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if byteLen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthLightclient
 			}
-			postIndex := iNdEx + byteLen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthLightclient
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MerklePath = append(m.MerklePath, make([]byte, postIndex-iNdEx))
-			copy(m.MerklePath[len(m.MerklePath)-1], dAtA[iNdEx:postIndex])
+			m.MerklePath = append(m.MerklePath, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

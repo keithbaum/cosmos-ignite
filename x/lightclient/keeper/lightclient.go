@@ -21,7 +21,7 @@ func (k Keeper) VerifyTx(
 		return false, types.ErrInvalidBlockHeight
 	}
 
-	if !bytes.Equal(proof.MerkleRoot, merkleRoot) {
+	if !bytes.Equal([]byte(proof.MerkleRoot), merkleRoot) {
 		return false, nil
 	} // Do not consider it an error, just invalid tx
 
@@ -30,21 +30,25 @@ func (k Keeper) VerifyTx(
 
 func (k Keeper) verifyMerkleProof(txHash []byte, proof types.Proof, data types.TxData) (bool, error) {
 	// ToDo calculateTxPositionInMerklePath: It calculates in the binary merkle tree path, in which position should the txHash be located
-	merklePathIndex, err := k.calculateTxPositionInMerklePath(data.TxIdx, proof.MerklePath)
+	merklePathBytes := make([][]byte, len(proof.MerklePath))
+	for i, s := range proof.MerklePath {
+		merklePathBytes[i] = []byte(s)
+	}
+	merklePathIndex, err := k.calculateTxPositionInMerklePath(data.TxIdx, merklePathBytes)
 	if err != nil {
 		return false, err
 	}
 
 	var fullMerklePath [][]byte
-	fullMerklePath = append(fullMerklePath, proof.MerklePath[:merklePathIndex]...)
+	fullMerklePath = append(fullMerklePath, merklePathBytes[:merklePathIndex]...)
 	fullMerklePath = append(fullMerklePath, txHash)
-	fullMerklePath = append(fullMerklePath, proof.MerklePath[merklePathIndex:]...)
+	fullMerklePath = append(fullMerklePath, merklePathBytes[merklePathIndex:]...)
 
 	calculatedMerkleRoot, err := k.calculateMerkleRoot(fullMerklePath) // ToDo calculateMerkleRoot: Do the mamuschka of hashes calculation
 	if err != nil {
 		return false, err
 	}
-	return bytes.Equal(calculatedMerkleRoot, proof.MerkleRoot), nil
+	return bytes.Equal(calculatedMerkleRoot, []byte(proof.MerkleRoot)), nil
 }
 
 func (k Keeper) storeExternalChain1MerkleRoot(ctx sdk.Context, blockHeight int64, merkleRoot []byte) error {

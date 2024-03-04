@@ -5,8 +5,8 @@ option go_package = "foochain/x/lightclient/types";
 
 // Proof represents a Merkle proof.
 message Proof {
-  bytes merkle_root = 1;
-  repeated bytes merkle_path = 2;
+  string merkle_root = 1;
+  repeated string merkle_path = 2;
 }
 
 // TxData represents the data contained in a transaction.
