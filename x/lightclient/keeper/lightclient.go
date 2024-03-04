@@ -30,7 +30,7 @@ func (k Keeper) VerifyTx(
 
 func (k Keeper) verifyMerkleProof(txHash []byte, proof types.Proof, data types.TxData) (bool, error) {
 	// ToDo calculateTxPositionInMerklePath: It calculates in the binary merkle tree path, in which position should the txHash be located
-	merklePathIndex, err := k.calculateTxPositionInMerklePath(data.TxId, proof.MerklePath)
+	merklePathIndex, err := k.calculateTxPositionInMerklePath(data.TxIdx, proof.MerklePath)
 	if err != nil {
 		return false, err
 	}

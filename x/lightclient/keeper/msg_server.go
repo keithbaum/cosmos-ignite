@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"cosmossdk.io/errors"
 	"foochain/x/lightclient/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -21,18 +22,23 @@ func NewMsgServerImpl(keeper Keeper) types.MsgServer {
 
 var _ types.MsgServer = msgServer{}
 
-func (k msgServer) StoreExternalChain1BlockMerleRoot(goCtx context.Context, msg *types.StoreExternalChain1BlockMerleRootRequest) (*types.StoreExternalChain1BlockMerleRootResponse, error) {
-	if msg.Sender != AuthorizedAdmin {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, "invalid or unauthorized sender address")
+func (k msgServer) StoreExternalChain1TxHeaders(goCtx context.Context, msg *types.MsgStoreExternalChain1TxHeadersRequest) (*types.MsgStoreExternalChain1TxHeadersResponse, error) {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	signerAddress, err := sdk.AccAddressFromBech32(msg.Sender)
+	if err != nil {
+		panic(err)
+	}
+	authorizedAdmin, _ := sdk.AccAddressFromHexUnsafe(AuthorizedAdmin)
+	if signerAddress.Equals(authorizedAdmin) {
+		return nil, errors.Wrap(sdkerrors.ErrInvalidAddress, "invalid or unauthorized sender address")
 	}
 
-	ctx := sdk.UnwrapSDKContext(goCtx)
 	var block_height = msg.BlockHeight
 	var merkle_root = msg.MerkleRoot
 
-	err := k.storeExternalChain1MerkleRoot(ctx, block_height, merkle_root)
+	err = k.storeExternalChain1MerkleRoot(ctx, block_height, []byte(merkle_root))
 	if err != nil {
 		return nil, err
 	}
-	return &types.StoreExternalChain1BlockMerleRootResponse{}, nil
+	return &types.MsgStoreExternalChain1TxHeadersResponse{}, nil
 }

@@ -6,10 +6,15 @@ package types
 import (
 	context "context"
 	fmt "fmt"
+	_ "github.com/cosmos/cosmos-sdk/types/msgservice"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
 	proto "github.com/cosmos/gogoproto/proto"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
+	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -23,18 +28,136 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+// Message will come from a trustful source where Tx Merkle Root can be extracted
+type MsgStoreExternalChain1TxHeadersRequest struct {
+	Sender      string `protobuf:"bytes,1,opt,name=sender,proto3" json:"sender,omitempty"`
+	BlockHeight int64  `protobuf:"varint,2,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
+	MerkleRoot  string `protobuf:"bytes,3,opt,name=merkle_root,json=merkleRoot,proto3" json:"merkle_root,omitempty"`
+}
+
+func (m *MsgStoreExternalChain1TxHeadersRequest) Reset() {
+	*m = MsgStoreExternalChain1TxHeadersRequest{}
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) String() string { return proto.CompactTextString(m) }
+func (*MsgStoreExternalChain1TxHeadersRequest) ProtoMessage()    {}
+func (*MsgStoreExternalChain1TxHeadersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_50fd063f0a481fa3, []int{0}
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgStoreExternalChain1TxHeadersRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgStoreExternalChain1TxHeadersRequest.Merge(m, src)
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgStoreExternalChain1TxHeadersRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgStoreExternalChain1TxHeadersRequest proto.InternalMessageInfo
+
+func (m *MsgStoreExternalChain1TxHeadersRequest) GetSender() string {
+	if m != nil {
+		return m.Sender
+	}
+	return ""
+}
+
+func (m *MsgStoreExternalChain1TxHeadersRequest) GetBlockHeight() int64 {
+	if m != nil {
+		return m.BlockHeight
+	}
+	return 0
+}
+
+func (m *MsgStoreExternalChain1TxHeadersRequest) GetMerkleRoot() string {
+	if m != nil {
+		return m.MerkleRoot
+	}
+	return ""
+}
+
+// StoreExternalChain1BlockMerleRootResponse for the StoreExternalChain1BlockMerleRoot rpc method
+type MsgStoreExternalChain1TxHeadersResponse struct {
+}
+
+func (m *MsgStoreExternalChain1TxHeadersResponse) Reset() {
+	*m = MsgStoreExternalChain1TxHeadersResponse{}
+}
+func (m *MsgStoreExternalChain1TxHeadersResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgStoreExternalChain1TxHeadersResponse) ProtoMessage()    {}
+func (*MsgStoreExternalChain1TxHeadersResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_50fd063f0a481fa3, []int{1}
+}
+func (m *MsgStoreExternalChain1TxHeadersResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgStoreExternalChain1TxHeadersResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgStoreExternalChain1TxHeadersResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgStoreExternalChain1TxHeadersResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgStoreExternalChain1TxHeadersResponse.Merge(m, src)
+}
+func (m *MsgStoreExternalChain1TxHeadersResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgStoreExternalChain1TxHeadersResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgStoreExternalChain1TxHeadersResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgStoreExternalChain1TxHeadersResponse proto.InternalMessageInfo
+
+func init() {
+	proto.RegisterType((*MsgStoreExternalChain1TxHeadersRequest)(nil), "foochain.lightclient.MsgStoreExternalChain1TxHeadersRequest")
+	proto.RegisterType((*MsgStoreExternalChain1TxHeadersResponse)(nil), "foochain.lightclient.MsgStoreExternalChain1TxHeadersResponse")
+}
+
 func init() { proto.RegisterFile("foochain/lightclient/tx.proto", fileDescriptor_50fd063f0a481fa3) }
 
 var fileDescriptor_50fd063f0a481fa3 = []byte{
-	// 113 bytes of a gzipped FileDescriptorProto
+	// 290 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4d, 0xcb, 0xcf, 0x4f,
 	0xce, 0x48, 0xcc, 0xcc, 0xd3, 0xcf, 0xc9, 0x4c, 0xcf, 0x28, 0x49, 0xce, 0xc9, 0x4c, 0xcd, 0x2b,
 	0xd1, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x81, 0x49, 0xeb, 0x21, 0x49,
-	0x1b, 0xb1, 0x72, 0x31, 0xfb, 0x16, 0xa7, 0x3b, 0x99, 0x9d, 0x78, 0x24, 0xc7, 0x78, 0xe1, 0x91,
-	0x1c, 0xe3, 0x83, 0x47, 0x72, 0x8c, 0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78, 0x2c, 0xc7, 0x70, 0xe3,
-	0xb1, 0x1c, 0x43, 0x94, 0x0c, 0xdc, 0xd4, 0x0a, 0x54, 0x73, 0x2b, 0x0b, 0x52, 0x8b, 0x93, 0xd8,
-	0xc0, 0x66, 0x1b, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x8f, 0x9c, 0xcf, 0xae, 0x7c, 0x00, 0x00,
-	0x00,
+	0x4b, 0x89, 0x27, 0xe7, 0x17, 0xe7, 0xe6, 0x17, 0xeb, 0xe7, 0x16, 0xa7, 0xeb, 0x97, 0x19, 0x82,
+	0x28, 0x88, 0x72, 0xa5, 0x89, 0x8c, 0x5c, 0x6a, 0xbe, 0xc5, 0xe9, 0xc1, 0x25, 0xf9, 0x45, 0xa9,
+	0xae, 0x15, 0x25, 0xa9, 0x45, 0x79, 0x89, 0x39, 0xce, 0x20, 0xed, 0x86, 0x21, 0x15, 0x1e, 0xa9,
+	0x89, 0x29, 0xa9, 0x45, 0xc5, 0x41, 0xa9, 0x85, 0xa5, 0xa9, 0xc5, 0x25, 0x42, 0x62, 0x5c, 0x6c,
+	0xc5, 0xa9, 0x79, 0x29, 0xa9, 0x45, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x50, 0x9e, 0x90,
+	0x22, 0x17, 0x4f, 0x52, 0x4e, 0x7e, 0x72, 0x76, 0x7c, 0x46, 0x2a, 0xc8, 0x46, 0x09, 0x26, 0x05,
+	0x46, 0x0d, 0xe6, 0x20, 0x6e, 0xb0, 0x98, 0x07, 0x58, 0x48, 0x48, 0x9e, 0x8b, 0x3b, 0x37, 0xb5,
+	0x28, 0x3b, 0x27, 0x35, 0xbe, 0x28, 0x3f, 0xbf, 0x44, 0x82, 0x19, 0xac, 0x9f, 0x0b, 0x22, 0x14,
+	0x94, 0x9f, 0x5f, 0x62, 0xc5, 0xdd, 0xf4, 0x7c, 0x83, 0x16, 0xd4, 0x40, 0x25, 0x4d, 0x2e, 0x75,
+	0x82, 0x4e, 0x2a, 0x2e, 0xc8, 0xcf, 0x2b, 0x4e, 0x35, 0x5a, 0xcc, 0xc8, 0xc5, 0xec, 0x5b, 0x9c,
+	0x2e, 0x34, 0x9b, 0x91, 0x4b, 0x06, 0x9f, 0x06, 0x21, 0x1b, 0x3d, 0x6c, 0xe1, 0xa2, 0x47, 0x9c,
+	0xd7, 0xa5, 0x6c, 0xc9, 0xd4, 0x0d, 0x71, 0xa5, 0x93, 0xd9, 0x89, 0x47, 0x72, 0x8c, 0x17, 0x1e,
+	0xc9, 0x31, 0x3e, 0x78, 0x24, 0xc7, 0x38, 0xe1, 0xb1, 0x1c, 0xc3, 0x85, 0xc7, 0x72, 0x0c, 0x37,
+	0x1e, 0xcb, 0x31, 0x44, 0xc9, 0xc0, 0x23, 0xb3, 0x02, 0x35, 0x3a, 0x2b, 0x0b, 0x52, 0x8b, 0x93,
+	0xd8, 0xc0, 0x71, 0x64, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x23, 0x61, 0xf9, 0x9c, 0xf3, 0x01,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -49,6 +172,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
+	// Store External Chain 1 Tx details
+	StoreExternalChain1TxHeaders(ctx context.Context, in *MsgStoreExternalChain1TxHeadersRequest, opts ...grpc.CallOption) (*MsgStoreExternalChain1TxHeadersResponse, error)
 }
 
 type msgClient struct {
@@ -59,22 +184,439 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 	return &msgClient{cc}
 }
 
+func (c *msgClient) StoreExternalChain1TxHeaders(ctx context.Context, in *MsgStoreExternalChain1TxHeadersRequest, opts ...grpc.CallOption) (*MsgStoreExternalChain1TxHeadersResponse, error) {
+	out := new(MsgStoreExternalChain1TxHeadersResponse)
+	err := c.cc.Invoke(ctx, "/foochain.lightclient.Msg/StoreExternalChain1TxHeaders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
+	// Store External Chain 1 Tx details
+	StoreExternalChain1TxHeaders(context.Context, *MsgStoreExternalChain1TxHeadersRequest) (*MsgStoreExternalChain1TxHeadersResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
 type UnimplementedMsgServer struct {
 }
 
+func (*UnimplementedMsgServer) StoreExternalChain1TxHeaders(ctx context.Context, req *MsgStoreExternalChain1TxHeadersRequest) (*MsgStoreExternalChain1TxHeadersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreExternalChain1TxHeaders not implemented")
+}
+
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
 	s.RegisterService(&_Msg_serviceDesc, srv)
+}
+
+func _Msg_StoreExternalChain1TxHeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgStoreExternalChain1TxHeadersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).StoreExternalChain1TxHeaders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/foochain.lightclient.Msg/StoreExternalChain1TxHeaders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).StoreExternalChain1TxHeaders(ctx, req.(*MsgStoreExternalChain1TxHeadersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "foochain.lightclient.Msg",
 	HandlerType: (*MsgServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "foochain/lightclient/tx.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "StoreExternalChain1TxHeaders",
+			Handler:    _Msg_StoreExternalChain1TxHeaders_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "foochain/lightclient/tx.proto",
 }
+
+func (m *MsgStoreExternalChain1TxHeadersRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgStoreExternalChain1TxHeadersRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgStoreExternalChain1TxHeadersRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.MerkleRoot) > 0 {
+		i -= len(m.MerkleRoot)
+		copy(dAtA[i:], m.MerkleRoot)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.MerkleRoot)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.BlockHeight != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.BlockHeight))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Sender) > 0 {
+		i -= len(m.Sender)
+		copy(dAtA[i:], m.Sender)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Sender)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgStoreExternalChain1TxHeadersResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgStoreExternalChain1TxHeadersResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgStoreExternalChain1TxHeadersResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
+	offset -= sovTx(v)
+	base := offset
+	for v >= 1<<7 {
+		dAtA[offset] = uint8(v&0x7f | 0x80)
+		v >>= 7
+		offset++
+	}
+	dAtA[offset] = uint8(v)
+	return base
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Sender)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.BlockHeight != 0 {
+		n += 1 + sovTx(uint64(m.BlockHeight))
+	}
+	l = len(m.MerkleRoot)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgStoreExternalChain1TxHeadersResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func sovTx(x uint64) (n int) {
+	return (math_bits.Len64(x|1) + 6) / 7
+}
+func sozTx(x uint64) (n int) {
+	return sovTx(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *MsgStoreExternalChain1TxHeadersRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgStoreExternalChain1TxHeadersRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgStoreExternalChain1TxHeadersRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Sender", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Sender = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BlockHeight", wireType)
+			}
+			m.BlockHeight = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BlockHeight |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MerkleRoot", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MerkleRoot = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgStoreExternalChain1TxHeadersResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgStoreExternalChain1TxHeadersResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgStoreExternalChain1TxHeadersResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func skipTx(dAtA []byte) (n int, err error) {
+	l := len(dAtA)
+	iNdEx := 0
+	depth := 0
+	for iNdEx < l {
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return 0, io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		wireType := int(wire & 0x7)
+		switch wireType {
+		case 0:
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				iNdEx++
+				if dAtA[iNdEx-1] < 0x80 {
+					break
+				}
+			}
+		case 1:
+			iNdEx += 8
+		case 2:
+			var length int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				length |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if length < 0 {
+				return 0, ErrInvalidLengthTx
+			}
+			iNdEx += length
+		case 3:
+			depth++
+		case 4:
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupTx
+			}
+			depth--
+		case 5:
+			iNdEx += 4
+		default:
+			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
+		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthTx
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
+	}
+	return 0, io.ErrUnexpectedEOF
+}
+
+var (
+	ErrInvalidLengthTx        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowTx          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupTx = fmt.Errorf("proto: unexpected end of group")
+)

@@ -19,16 +19,16 @@ func NewMsgServerImpl(keeper Keeper, lightclientKeeper types.LightclientKeeper) 
 
 var _ types.MsgServer = msgServer{}
 
-func (k msgServer) VerifyTx(goCtx context.Context, msg *types.VerifyTxRequest) (*types.VerifyTxResponse, error) {
+func (k msgServer) VerifyTx(goCtx context.Context, msg *types.MsgVerifyTxRequest) (*types.MsgVerifyTxResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	var tx_hash = msg.TxHash
-	var block_height = msg.BlockHeight
+	var txHash = []byte(msg.TxHash)
+	var blockHeight = msg.BlockHeight
 	var proof = msg.Proof
-	var data = msg.Data
+	var data = msg.TxData
 
-	verified, err := k.LightclientKeeper.VerifyTx(ctx, tx_hash, block_height, proof, data)
+	verified, err := k.LightclientKeeper.VerifyTx(ctx, txHash, blockHeight, *proof, *data)
 	if err != nil {
 		return nil, err
 	}
-	return &types.VerifyTxResponse{Verified: verified}, nil
+	return &types.MsgVerifyTxResponse{Verified: verified}, nil
 }

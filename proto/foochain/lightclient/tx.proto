@@ -1,22 +1,23 @@
 syntax = "proto3";
 package foochain.lightclient;
 
-import "cosmos_proto/cosmos.proto";
 option go_package = "foochain/x/lightclient/types";
+import "cosmos/msg/v1/msg.proto";
 
 // Msg defines the Msg service.
 service Msg {
   // Store External Chain 1 Tx details
-  rpc StoreExternalChain1BlockMerleRoot(StoreExternalChain1BlockMerleRootRequest) returns (StoreExternalChain1BlockMerleRootResponse);
+  rpc StoreExternalChain1TxHeaders(MsgStoreExternalChain1TxHeadersRequest) returns (MsgStoreExternalChain1TxHeadersResponse);
 }
 
 // Message will come from a trustful source where Tx Merkle Root can be extracted
-message StoreExternalChain1BlockMerleRootRequest {
-//  option (cosmos.msg.v1.signer) = "sender";
+message MsgStoreExternalChain1TxHeadersRequest {
+  option (cosmos.msg.v1.signer) = "sender";
 
-  int64 block_height = 1;
-  string merkle_root = 2;
+  string sender = 1;
+  int64 block_height = 2;
+  string merkle_root = 3;
 }
 
 // StoreExternalChain1BlockMerleRootResponse for the StoreExternalChain1BlockMerleRoot rpc method
-message StoreExternalChain1BlockMerleRootResponse {}
+message MsgStoreExternalChain1TxHeadersResponse {}

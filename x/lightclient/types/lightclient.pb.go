@@ -24,6 +24,8 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Proof represents a Merkle proof.
 type Proof struct {
+	MerkleRoot []byte   `protobuf:"bytes,1,opt,name=merkle_root,json=merkleRoot,proto3" json:"merkle_root,omitempty"`
+	MerklePath [][]byte `protobuf:"bytes,2,rep,name=merkle_path,json=merklePath,proto3" json:"merkle_path,omitempty"`
 }
 
 func (m *Proof) Reset()         { *m = Proof{} }
@@ -59,8 +61,23 @@ func (m *Proof) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Proof proto.InternalMessageInfo
 
+func (m *Proof) GetMerkleRoot() []byte {
+	if m != nil {
+		return m.MerkleRoot
+	}
+	return nil
+}
+
+func (m *Proof) GetMerklePath() [][]byte {
+	if m != nil {
+		return m.MerklePath
+	}
+	return nil
+}
+
 // TxData represents the data contained in a transaction.
 type TxData struct {
+	TxIdx int64 `protobuf:"varint,1,opt,name=tx_idx,json=txIdx,proto3" json:"tx_idx,omitempty"`
 }
 
 func (m *TxData) Reset()         { *m = TxData{} }
@@ -96,6 +113,13 @@ func (m *TxData) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TxData proto.InternalMessageInfo
 
+func (m *TxData) GetTxIdx() int64 {
+	if m != nil {
+		return m.TxIdx
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*Proof)(nil), "foochain.lightclient.Proof")
 	proto.RegisterType((*TxData)(nil), "foochain.lightclient.TxData")
@@ -106,15 +130,19 @@ func init() {
 }
 
 var fileDescriptor_fbb63f5895efdcd1 = []byte{
-	// 125 bytes of a gzipped FileDescriptorProto
+	// 190 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0x4b, 0xcb, 0xcf, 0x4f,
 	0xce, 0x48, 0xcc, 0xcc, 0xd3, 0xcf, 0xc9, 0x4c, 0xcf, 0x28, 0x49, 0xce, 0xc9, 0x4c, 0xcd, 0x2b,
 	0x41, 0x66, 0xeb, 0x15, 0x14, 0xe5, 0x97, 0xe4, 0x0b, 0x89, 0xc0, 0xd4, 0xe9, 0x21, 0xc9, 0x29,
-	0xb1, 0x73, 0xb1, 0x06, 0x14, 0xe5, 0xe7, 0xa7, 0x29, 0x71, 0x70, 0xb1, 0x85, 0x54, 0xb8, 0x24,
-	0x96, 0x24, 0x3a, 0x99, 0x9d, 0x78, 0x24, 0xc7, 0x78, 0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72,
-	0x8c, 0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78, 0x2c, 0xc7, 0x70, 0xe3, 0xb1, 0x1c, 0x43, 0x94, 0x0c,
-	0xdc, 0xaa, 0x0a, 0x14, 0xcb, 0x4a, 0x2a, 0x0b, 0x52, 0x8b, 0x93, 0xd8, 0xc0, 0xf6, 0x18, 0x03,
-	0x02, 0x00, 0x00, 0xff, 0xff, 0xd0, 0x86, 0x46, 0x47, 0x91, 0x00, 0x00, 0x00,
+	0x79, 0x72, 0xb1, 0x06, 0x14, 0xe5, 0xe7, 0xa7, 0x09, 0xc9, 0x73, 0x71, 0xe7, 0xa6, 0x16, 0x65,
+	0xe7, 0xa4, 0xc6, 0x17, 0xe5, 0xe7, 0x97, 0x48, 0x30, 0x2a, 0x30, 0x6a, 0xf0, 0x04, 0x71, 0x41,
+	0x84, 0x82, 0xf2, 0xf3, 0x4b, 0x90, 0x14, 0x14, 0x24, 0x96, 0x64, 0x48, 0x30, 0x29, 0x30, 0x23,
+	0x14, 0x04, 0x24, 0x96, 0x64, 0x28, 0xc9, 0x73, 0xb1, 0x85, 0x54, 0xb8, 0x24, 0x96, 0x24, 0x0a,
+	0x89, 0x72, 0xb1, 0x95, 0x54, 0xc4, 0x67, 0xa6, 0x54, 0x80, 0x8d, 0x61, 0x0e, 0x62, 0x2d, 0xa9,
+	0xf0, 0x4c, 0xa9, 0x70, 0x32, 0x3b, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f,
+	0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28,
+	0x19, 0xb8, 0x1f, 0x2a, 0x50, 0x7c, 0x51, 0x52, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0xf6, 0x80,
+	0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x3d, 0xd7, 0xc3, 0x67, 0xea, 0x00, 0x00, 0x00,
 }
 
 func (m *Proof) Marshal() (dAtA []byte, err error) {
@@ -137,6 +165,22 @@ func (m *Proof) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.MerklePath) > 0 {
+		for iNdEx := len(m.MerklePath) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.MerklePath[iNdEx])
+			copy(dAtA[i:], m.MerklePath[iNdEx])
+			i = encodeVarintLightclient(dAtA, i, uint64(len(m.MerklePath[iNdEx])))
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.MerkleRoot) > 0 {
+		i -= len(m.MerkleRoot)
+		copy(dAtA[i:], m.MerkleRoot)
+		i = encodeVarintLightclient(dAtA, i, uint64(len(m.MerkleRoot)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -160,6 +204,11 @@ func (m *TxData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.TxIdx != 0 {
+		i = encodeVarintLightclient(dAtA, i, uint64(m.TxIdx))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -180,6 +229,16 @@ func (m *Proof) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.MerkleRoot)
+	if l > 0 {
+		n += 1 + l + sovLightclient(uint64(l))
+	}
+	if len(m.MerklePath) > 0 {
+		for _, b := range m.MerklePath {
+			l = len(b)
+			n += 1 + l + sovLightclient(uint64(l))
+		}
+	}
 	return n
 }
 
@@ -189,6 +248,9 @@ func (m *TxData) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.TxIdx != 0 {
+		n += 1 + sovLightclient(uint64(m.TxIdx))
+	}
 	return n
 }
 
@@ -227,6 +289,72 @@ func (m *Proof) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: Proof: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MerkleRoot", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLightclient
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthLightclient
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLightclient
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MerkleRoot = append(m.MerkleRoot[:0], dAtA[iNdEx:postIndex]...)
+			if m.MerkleRoot == nil {
+				m.MerkleRoot = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MerklePath", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLightclient
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthLightclient
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLightclient
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MerklePath = append(m.MerklePath, make([]byte, postIndex-iNdEx))
+			copy(m.MerklePath[len(m.MerklePath)-1], dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipLightclient(dAtA[iNdEx:])
@@ -277,6 +405,25 @@ func (m *TxData) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: TxData: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TxIdx", wireType)
+			}
+			m.TxIdx = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLightclient
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.TxIdx |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipLightclient(dAtA[iNdEx:])

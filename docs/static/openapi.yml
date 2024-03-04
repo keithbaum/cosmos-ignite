@@ -70603,6 +70603,12 @@ definitions:
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
     description: Period defines a length of time and amount of coins that will vest.
+  foochain.foo.MsgVerifyTxResponse:
+    type: object
+    properties:
+      verified:
+        type: boolean
+    title: Response for the VerifyTx rpc method
   foochain.foo.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -70613,6 +70619,31 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  foochain.lightclient.Proof:
+    type: object
+    properties:
+      merkle_root:
+        type: string
+        format: byte
+      merkle_path:
+        type: array
+        items:
+          type: string
+          format: byte
+    description: Proof represents a Merkle proof.
+  foochain.lightclient.TxData:
+    type: object
+    properties:
+      tx_idx:
+        type: string
+        format: int64
+        title: the index of the transaction in the block
+    description: TxData represents the data contained in a transaction.
+  foochain.lightclient.MsgStoreExternalChain1TxHeadersResponse:
+    type: object
+    title: >-
+      StoreExternalChain1BlockMerleRootResponse for the
+      StoreExternalChain1BlockMerleRoot rpc method
   foochain.lightclient.Params:
     type: object
     description: Params defines the parameters for the module.
