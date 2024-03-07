@@ -8,7 +8,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const AuthorizedAdmin = "admin_signer_address"
+const AuthorizedAdmin = "cosmos1q0pha0zu457p5pz68y95tzaljryy3ln59sum5t"
 
 type msgServer struct {
 	Keeper
