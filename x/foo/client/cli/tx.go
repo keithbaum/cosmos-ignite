@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	lightclientmoduletypes "foochain/x/lightclient/types"
+	"github.com/cosmos/cosmos-sdk/client/flags"
 	"strconv"
 	"strings"
 	"time"
@@ -71,6 +72,7 @@ func NewVerifyTxCmd() *cobra.Command {
 			}
 
 			msg := types.MsgVerifyTxRequest{}
+			msg.Sender = clientCtx.GetFromAddress().String()
 			msg.TxHash = txHash
 			msg.BlockHeight = blockHeight
 			msg.TxData = &lightclientmoduletypes.TxData{
@@ -88,6 +90,8 @@ func NewVerifyTxCmd() *cobra.Command {
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &msg)
 		},
 	}
+
+	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
 }

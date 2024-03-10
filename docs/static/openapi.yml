@@ -70624,12 +70624,10 @@ definitions:
     properties:
       merkle_root:
         type: string
-        format: byte
       merkle_path:
         type: array
         items:
           type: string
-          format: byte
     description: Proof represents a Merkle proof.
   foochain.lightclient.TxData:
     type: object

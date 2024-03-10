@@ -8,7 +8,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const AuthorizedAdmin = "cosmos1q0pha0zu457p5pz68y95tzaljryy3ln59sum5t"
+const AuthorizedAdmin = "cosmos1v3kkaxg7a6hplk8d7y22ter72vjvyjjyzr2scp" // alice
 
 type msgServer struct {
 	Keeper
@@ -28,8 +28,8 @@ func (k msgServer) StoreExternalChain1TxHeaders(goCtx context.Context, msg *type
 	if err != nil {
 		panic(err)
 	}
-	authorizedAdmin, _ := sdk.AccAddressFromHexUnsafe(AuthorizedAdmin)
-	if signerAddress.Equals(authorizedAdmin) {
+	authorizedAdmin, _ := sdk.AccAddressFromBech32(AuthorizedAdmin)
+	if !signerAddress.Equals(authorizedAdmin) {
 		return nil, errors.Wrap(sdkerrors.ErrInvalidAddress, "invalid or unauthorized sender address")
 	}
 
