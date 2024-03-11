@@ -6,6 +6,7 @@ package types
 import (
 	context "context"
 	fmt "fmt"
+	types "foochain/x/lightclient/types"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
 	proto "github.com/cosmos/gogoproto/proto"
@@ -112,31 +113,158 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
+// Message to request verification of tx
+type QueryVerifyTxRequest struct {
+	TxHash      string        `protobuf:"bytes,1,opt,name=tx_hash,json=txHash,proto3" json:"tx_hash,omitempty"`
+	BlockHeight int64         `protobuf:"varint,2,opt,name=block_height,json=blockHeight,proto3" json:"block_height,omitempty"`
+	Proof       *types.Proof  `protobuf:"bytes,3,opt,name=proof,proto3" json:"proof,omitempty"`
+	TxData      *types.TxData `protobuf:"bytes,4,opt,name=tx_data,json=txData,proto3" json:"tx_data,omitempty"`
+}
+
+func (m *QueryVerifyTxRequest) Reset()         { *m = QueryVerifyTxRequest{} }
+func (m *QueryVerifyTxRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryVerifyTxRequest) ProtoMessage()    {}
+func (*QueryVerifyTxRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5e5d6c2c3200a9, []int{2}
+}
+func (m *QueryVerifyTxRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryVerifyTxRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryVerifyTxRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryVerifyTxRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryVerifyTxRequest.Merge(m, src)
+}
+func (m *QueryVerifyTxRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryVerifyTxRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryVerifyTxRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryVerifyTxRequest proto.InternalMessageInfo
+
+func (m *QueryVerifyTxRequest) GetTxHash() string {
+	if m != nil {
+		return m.TxHash
+	}
+	return ""
+}
+
+func (m *QueryVerifyTxRequest) GetBlockHeight() int64 {
+	if m != nil {
+		return m.BlockHeight
+	}
+	return 0
+}
+
+func (m *QueryVerifyTxRequest) GetProof() *types.Proof {
+	if m != nil {
+		return m.Proof
+	}
+	return nil
+}
+
+func (m *QueryVerifyTxRequest) GetTxData() *types.TxData {
+	if m != nil {
+		return m.TxData
+	}
+	return nil
+}
+
+// Response for the VerifyTx rpc method
+type QueryVerifyTxResponse struct {
+	Verified bool `protobuf:"varint,1,opt,name=verified,proto3" json:"verified,omitempty"`
+}
+
+func (m *QueryVerifyTxResponse) Reset()         { *m = QueryVerifyTxResponse{} }
+func (m *QueryVerifyTxResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryVerifyTxResponse) ProtoMessage()    {}
+func (*QueryVerifyTxResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb5e5d6c2c3200a9, []int{3}
+}
+func (m *QueryVerifyTxResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryVerifyTxResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryVerifyTxResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryVerifyTxResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryVerifyTxResponse.Merge(m, src)
+}
+func (m *QueryVerifyTxResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryVerifyTxResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryVerifyTxResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryVerifyTxResponse proto.InternalMessageInfo
+
+func (m *QueryVerifyTxResponse) GetVerified() bool {
+	if m != nil {
+		return m.Verified
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "foochain.foo.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "foochain.foo.QueryParamsResponse")
+	proto.RegisterType((*QueryVerifyTxRequest)(nil), "foochain.foo.QueryVerifyTxRequest")
+	proto.RegisterType((*QueryVerifyTxResponse)(nil), "foochain.foo.QueryVerifyTxResponse")
 }
 
 func init() { proto.RegisterFile("foochain/foo/query.proto", fileDescriptor_bb5e5d6c2c3200a9) }
 
 var fileDescriptor_bb5e5d6c2c3200a9 = []byte{
-	// 249 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x48, 0xcb, 0xcf, 0x4f,
-	0xce, 0x48, 0xcc, 0xcc, 0xd3, 0x4f, 0xcb, 0xcf, 0xd7, 0x2f, 0x2c, 0x4d, 0x2d, 0xaa, 0xd4, 0x2b,
-	0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x81, 0xc9, 0xe8, 0xa5, 0xe5, 0xe7, 0x4b, 0x89, 0xa4, 0xe7,
-	0xa7, 0xe7, 0x83, 0x25, 0xf4, 0x41, 0x2c, 0x88, 0x1a, 0x29, 0x99, 0xf4, 0xfc, 0xfc, 0xf4, 0x9c,
-	0x54, 0xfd, 0xc4, 0x82, 0x4c, 0xfd, 0xc4, 0xbc, 0xbc, 0xfc, 0x92, 0xc4, 0x92, 0xcc, 0xfc, 0xbc,
-	0x62, 0xa8, 0xac, 0x24, 0x8a, 0xd9, 0x05, 0x89, 0x45, 0x89, 0xb9, 0x50, 0x29, 0x25, 0x11, 0x2e,
-	0xa1, 0x40, 0x90, 0x5d, 0x01, 0x60, 0xc1, 0xa0, 0xd4, 0xc2, 0xd2, 0xd4, 0xe2, 0x12, 0x25, 0x4f,
-	0x2e, 0x61, 0x14, 0xd1, 0xe2, 0x82, 0xfc, 0xbc, 0xe2, 0x54, 0x21, 0x23, 0x2e, 0x36, 0x88, 0x66,
-	0x09, 0x46, 0x05, 0x46, 0x0d, 0x6e, 0x23, 0x11, 0x3d, 0x64, 0xa7, 0xe9, 0x41, 0x54, 0x3b, 0xb1,
-	0x9c, 0xb8, 0x27, 0xcf, 0x10, 0x04, 0x55, 0x69, 0x54, 0xc2, 0xc5, 0x0a, 0x36, 0x4a, 0x28, 0x9b,
-	0x8b, 0x0d, 0xa2, 0x40, 0x48, 0x01, 0x55, 0x1b, 0xa6, 0xfd, 0x52, 0x8a, 0x78, 0x54, 0x40, 0xdc,
-	0xa2, 0x24, 0xd3, 0x74, 0xf9, 0xc9, 0x64, 0x26, 0x31, 0x21, 0x11, 0x7d, 0x2c, 0x9e, 0x73, 0xd2,
-	0x3b, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96,
-	0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0x11, 0xb8, 0xf2, 0x0a, 0xb0,
-	0x86, 0x92, 0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0x70, 0x68, 0x18, 0x03, 0x02, 0x00, 0x00, 0xff,
-	0xff, 0xa0, 0x92, 0xc5, 0x02, 0x86, 0x01, 0x00, 0x00,
+	// 417 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0xcd, 0xee, 0xd2, 0x40,
+	0x14, 0xc5, 0x3b, 0x7f, 0xa0, 0xe2, 0xc0, 0x6a, 0xac, 0x5a, 0x2b, 0xa9, 0x50, 0x13, 0xc3, 0xaa,
+	0x8d, 0x10, 0x5f, 0x80, 0xb8, 0xc0, 0x1d, 0x56, 0xe2, 0xc2, 0x0d, 0x19, 0x60, 0xfa, 0x11, 0x6a,
+	0x6f, 0x69, 0x07, 0x53, 0xb6, 0x3e, 0x81, 0x89, 0xaf, 0xe3, 0x03, 0xe0, 0x8e, 0xc4, 0x8d, 0x2b,
+	0x63, 0xc0, 0x07, 0x31, 0x9d, 0x29, 0x08, 0x48, 0x58, 0x31, 0xdc, 0x73, 0xee, 0x3d, 0xbf, 0xb9,
+	0x53, 0xac, 0x7b, 0x00, 0xb3, 0x80, 0x86, 0xb1, 0xe3, 0x01, 0x38, 0xcb, 0x15, 0x4b, 0xd7, 0x76,
+	0x92, 0x02, 0x07, 0xd2, 0x3c, 0x28, 0xb6, 0x07, 0x60, 0x68, 0x3e, 0xf8, 0x20, 0x04, 0xa7, 0x38,
+	0x49, 0x8f, 0xd1, 0xf2, 0x01, 0xfc, 0x88, 0x39, 0x34, 0x09, 0x1d, 0x1a, 0xc7, 0xc0, 0x29, 0x0f,
+	0x21, 0xce, 0x4a, 0xf5, 0xc9, 0xd9, 0xec, 0x84, 0xa6, 0xf4, 0xe3, 0x41, 0x7a, 0x71, 0x94, 0xa2,
+	0xd0, 0x0f, 0xf8, 0x2c, 0x0a, 0x59, 0xcc, 0x4f, 0xcf, 0xd2, 0x67, 0x69, 0x98, 0xbc, 0x2d, 0x98,
+	0x46, 0xa2, 0xd9, 0x65, 0xcb, 0x15, 0xcb, 0xb8, 0xf5, 0x06, 0x3f, 0x38, 0xab, 0x66, 0x09, 0xc4,
+	0x19, 0x23, 0x3d, 0xac, 0xca, 0x10, 0x1d, 0xb5, 0x51, 0xb7, 0xd1, 0xd3, 0xec, 0xd3, 0x2b, 0xd8,
+	0xd2, 0x3d, 0xa8, 0x6e, 0x7e, 0x3d, 0x53, 0xdc, 0xd2, 0x69, 0x7d, 0x43, 0x58, 0x13, 0xb3, 0xde,
+	0xb3, 0x34, 0xf4, 0xd6, 0xe3, 0xbc, 0xcc, 0x20, 0x8f, 0xf1, 0x3d, 0x9e, 0x4f, 0x02, 0x9a, 0x05,
+	0x62, 0xda, 0x7d, 0x57, 0xe5, 0xf9, 0x90, 0x66, 0x01, 0xe9, 0xe0, 0xe6, 0x34, 0x82, 0xd9, 0x62,
+	0x12, 0xb0, 0x02, 0x57, 0xbf, 0x6b, 0xa3, 0x6e, 0xc5, 0x6d, 0x88, 0xda, 0x50, 0x94, 0xc8, 0x4b,
+	0x5c, 0x4b, 0x52, 0x00, 0x4f, 0xaf, 0x08, 0x8e, 0xa7, 0xff, 0x38, 0x4e, 0x6f, 0x38, 0x2a, 0x2c,
+	0xae, 0x74, 0x92, 0x57, 0x22, 0x6e, 0x4e, 0x39, 0xd5, 0xab, 0xa2, 0xa9, 0x75, 0xbd, 0x69, 0x9c,
+	0xbf, 0xa6, 0x9c, 0x16, 0x30, 0xc5, 0xaf, 0xd5, 0xc7, 0x0f, 0x2f, 0xe8, 0xcb, 0x5d, 0x18, 0xb8,
+	0xfe, 0xa9, 0xa8, 0x85, 0x6c, 0x2e, 0xf8, 0xeb, 0xee, 0xf1, 0x7f, 0xef, 0x3b, 0xc2, 0x35, 0xd1,
+	0x45, 0x16, 0x58, 0x95, 0x5b, 0x21, 0xed, 0xf3, 0x5d, 0xfd, 0xbf, 0x74, 0xa3, 0x73, 0xc3, 0x21,
+	0x43, 0xad, 0xd6, 0xe7, 0x1f, 0x7f, 0xbe, 0xde, 0x3d, 0x22, 0x9a, 0x73, 0xe5, 0xe5, 0xc9, 0x3b,
+	0x5c, 0x3f, 0x60, 0x12, 0xeb, 0xca, 0xb0, 0x8b, 0x17, 0x30, 0x9e, 0xdf, 0xf4, 0xc8, 0xc8, 0x81,
+	0xbd, 0xd9, 0x99, 0x68, 0xbb, 0x33, 0xd1, 0xef, 0x9d, 0x89, 0xbe, 0xec, 0x4d, 0x65, 0xbb, 0x37,
+	0x95, 0x9f, 0x7b, 0x53, 0xf9, 0xa0, 0x1d, 0x19, 0x72, 0x41, 0xc1, 0xd7, 0x09, 0xcb, 0xa6, 0xaa,
+	0xf8, 0xae, 0xfa, 0x7f, 0x03, 0x00, 0x00, 0xff, 0xff, 0xa9, 0x07, 0x22, 0x7d, 0xf8, 0x02, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -153,6 +281,7 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	VerifyTx(ctx context.Context, in *QueryVerifyTxRequest, opts ...grpc.CallOption) (*QueryVerifyTxResponse, error)
 }
 
 type queryClient struct {
@@ -172,10 +301,20 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) VerifyTx(ctx context.Context, in *QueryVerifyTxRequest, opts ...grpc.CallOption) (*QueryVerifyTxResponse, error) {
+	out := new(QueryVerifyTxResponse)
+	err := c.cc.Invoke(ctx, "/foochain.foo.Query/VerifyTx", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	VerifyTx(context.Context, *QueryVerifyTxRequest) (*QueryVerifyTxResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -184,6 +323,9 @@ type UnimplementedQueryServer struct {
 
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (*UnimplementedQueryServer) VerifyTx(ctx context.Context, req *QueryVerifyTxRequest) (*QueryVerifyTxResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyTx not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -208,6 +350,24 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_VerifyTx_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryVerifyTxRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).VerifyTx(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/foochain.foo.Query/VerifyTx",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).VerifyTx(ctx, req.(*QueryVerifyTxRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "foochain.foo.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -215,6 +375,10 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "VerifyTx",
+			Handler:    _Query_VerifyTx_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -277,6 +441,98 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryVerifyTxRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryVerifyTxRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryVerifyTxRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.TxData != nil {
+		{
+			size, err := m.TxData.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.Proof != nil {
+		{
+			size, err := m.Proof.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.BlockHeight != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.BlockHeight))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.TxHash) > 0 {
+		i -= len(m.TxHash)
+		copy(dAtA[i:], m.TxHash)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.TxHash)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryVerifyTxResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryVerifyTxResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryVerifyTxResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Verified {
+		i--
+		if m.Verified {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -305,6 +561,42 @@ func (m *QueryParamsResponse) Size() (n int) {
 	_ = l
 	l = m.Params.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryVerifyTxRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.TxHash)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	if m.BlockHeight != 0 {
+		n += 1 + sovQuery(uint64(m.BlockHeight))
+	}
+	if m.Proof != nil {
+		l = m.Proof.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	if m.TxData != nil {
+		l = m.TxData.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryVerifyTxResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Verified {
+		n += 2
+	}
 	return n
 }
 
@@ -426,6 +718,249 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryVerifyTxRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryVerifyTxRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryVerifyTxRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TxHash", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TxHash = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BlockHeight", wireType)
+			}
+			m.BlockHeight = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BlockHeight |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Proof", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Proof == nil {
+				m.Proof = &types.Proof{}
+			}
+			if err := m.Proof.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TxData", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.TxData == nil {
+				m.TxData = &types.TxData{}
+			}
+			if err := m.TxData.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryVerifyTxResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryVerifyTxResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryVerifyTxResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Verified", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Verified = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])

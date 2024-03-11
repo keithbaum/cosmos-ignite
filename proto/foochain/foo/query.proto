@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "foochain/foo/params.proto";
 
 option go_package = "foochain/x/foo/types";
+import "foochain/lightclient/lightclient.proto";
 
 // Query defines the gRPC querier service.
 service Query {
@@ -13,6 +14,7 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/foochain/foo/params";
   }
+  rpc VerifyTx(QueryVerifyTxRequest) returns (QueryVerifyTxResponse);
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -22,4 +24,17 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+// Message to request verification of tx
+message QueryVerifyTxRequest {
+  string tx_hash = 1;
+  int64 block_height = 2;
+  lightclient.Proof proof = 3;
+  lightclient.TxData tx_data = 4;
+}
+
+// Response for the VerifyTx rpc method
+message QueryVerifyTxResponse {
+  bool verified = 1;
 }

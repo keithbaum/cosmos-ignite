@@ -8,7 +8,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const AuthorizedAdmin = "cosmos1v3kkaxg7a6hplk8d7y22ter72vjvyjjyzr2scp" // alice
+const AuthorizedAdmin = "cosmos1gxezlssjd2g88tuc5j3rxmfgslkwyemju5r3zf" // alice
 
 type msgServer struct {
 	Keeper

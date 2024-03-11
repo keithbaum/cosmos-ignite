@@ -7,5 +7,5 @@ func (k Keeper) calculateTxPositionInMerklePath(transactionIndex int64, merklePa
 
 func (k Keeper) calculateMerkleRoot(fullMerklePath [][]byte) ([]byte, error) {
 	// ToDo
-	return []byte("987345abc8345934cc"), nil
+	return []byte("0xdca3326ad7e8121bf9cf9c12333e6b2271abe823ec9edfe42f813b1e768fa57b"), nil
 }

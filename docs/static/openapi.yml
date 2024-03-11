@@ -70603,12 +70603,6 @@ definitions:
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
     description: Period defines a length of time and amount of coins that will vest.
-  foochain.foo.MsgVerifyTxResponse:
-    type: object
-    properties:
-      verified:
-        type: boolean
-    title: Response for the VerifyTx rpc method
   foochain.foo.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -70619,6 +70613,12 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  foochain.foo.QueryVerifyTxResponse:
+    type: object
+    properties:
+      verified:
+        type: boolean
+    title: Response for the VerifyTx rpc method
   foochain.lightclient.Proof:
     type: object
     properties:

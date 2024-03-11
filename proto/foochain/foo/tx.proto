@@ -2,26 +2,8 @@ syntax = "proto3";
 package foochain.foo;
 
 option go_package = "foochain/x/foo/types";
-import "foochain/lightclient/lightclient.proto";
 import "cosmos/msg/v1/msg.proto";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc VerifyTx(MsgVerifyTxRequest) returns (MsgVerifyTxResponse);
-}
-
-// Message to request verification of tx
-message MsgVerifyTxRequest {
-  option (cosmos.msg.v1.signer) = "sender";
-
-  string sender = 1;
-  string tx_hash = 2;
-  int64 block_height = 3;
-  lightclient.Proof proof = 4;
-  lightclient.TxData tx_data = 5;
-}
-
-// Response for the VerifyTx rpc method
-message MsgVerifyTxResponse {
-  bool verified = 1;
 }

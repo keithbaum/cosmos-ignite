@@ -2,16 +2,10 @@ package cli
 
 import (
 	"fmt"
-	lightclientmoduletypes "foochain/x/lightclient/types"
-	"github.com/cosmos/cosmos-sdk/client/flags"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
 
-	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/tx"
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	"foochain/x/foo/types"
 )
@@ -45,53 +39,7 @@ Use "{{.CommandPath}} [command] --help" for more information about a command.{{e
 		},
 	}
 
-	fooTxCmd.AddCommand(
-		NewVerifyTxCmd(),
-	)
 	// this line is used by starport scaffolding # 1
 
 	return fooTxCmd
-}
-
-func NewVerifyTxCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "verify-proof [txHash] [blockHeight] [merkleRoot] [merklePath] [txIdx]",
-		Short: "verify a proof",
-		Long:  "verify a proof",
-		Args:  cobra.ExactArgs(5),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			txHash := args[0]
-			blockHeight, _ := strconv.ParseInt(args[1], 10, 64)
-			merkleRoot := args[2]
-			merklePath := strings.Split(args[3], ",")
-			txIdx, _ := strconv.ParseInt(args[4], 10, 64)
-
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			msg := types.MsgVerifyTxRequest{}
-			msg.Sender = clientCtx.GetFromAddress().String()
-			msg.TxHash = txHash
-			msg.BlockHeight = blockHeight
-			msg.TxData = &lightclientmoduletypes.TxData{
-				TxIdx: txIdx,
-			}
-			msg.Proof = &lightclientmoduletypes.Proof{
-				MerkleRoot: merkleRoot,
-				MerklePath: merklePath,
-			}
-
-			if err := msg.ValidateBasic(); err != nil {
-				return err
-			}
-
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), &msg)
-		},
-	}
-
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
 }
