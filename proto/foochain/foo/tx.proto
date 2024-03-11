@@ -2,8 +2,6 @@ syntax = "proto3";
 package foochain.foo;
 
 option go_package = "foochain/x/foo/types";
-import "cosmos/msg/v1/msg.proto";
 
 // Msg defines the Msg service.
-service Msg {
-}
+service Msg {}
