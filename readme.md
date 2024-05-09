@@ -83,17 +83,6 @@ Create a test application that leverages the `VerifyTx` function to validate tra
 Remember, while the tasks provide clear directives, the intention is also to observe your problem-solving approach, 
 creativity, and proficiency in developing a functional system.
 
-## Expectations
-
-- **Simplicity**: Your solution should be straightforward. Avoid over-engineering.
-- **Documentation**: Briefly document your design decisions, assumptions, and instructions for setting up and 
-  running the
-prototype.
-- **Code Quality**: Even though it's a prototype, follow good coding practices. Consider readability, modularity, and
-comments.
-
-The primary objective is to assess your design capability, and understanding of blockchain light clients. Don't be 
-overly concerned about creating a 'perfect' solution, but showcase your skills and thought process.
 
 ## Additional Notes
 
@@ -112,4 +101,4 @@ other related tasks. The choice is yours.
 
 - [Ignite CLI Documentation](https://docs.ignite.com/)
 
-Note: version `0.27.2` should be used for the assignment.
+Note: version `0.27.2` should be used
