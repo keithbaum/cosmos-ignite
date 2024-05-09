@@ -1,4 +1,4 @@
-# Take-home Task: Prototype of a Light Client for a Blockchain
+# Prototype of a Light Client for a Blockchain
 
 ## Prerequisites
 Before diving into the task, we recommend familiarizing yourself with the basics of the Cosmos SDK. An understanding 
