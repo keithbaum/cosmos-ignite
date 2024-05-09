@@ -95,11 +95,6 @@ comments.
 The primary objective is to assess your design capability, and understanding of blockchain light clients. Don't be 
 overly concerned about creating a 'perfect' solution, but showcase your skills and thought process.
 
-## Submission
-To submit your solution, please create a private GitHub repository and invite us to access it. Ensure that your 
-repository includes all the necessary documentation and instructions to understand and run your implementation.
-Please note that it shouldn't take more than 1 day to complete the task.
-
 ## Additional Notes
 
 ### Data Provisioning
