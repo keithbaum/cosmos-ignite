@@ -19,8 +19,7 @@ Typically a module can be seen as a smart contract in the context of a Cosmos ch
 ## Objective
 
 Develop a prototype of a light client that operates on top of a blockchain. This blockchain should verify proofs of 
-state or transactions without needing the complete external blockchain data. Candidates have the flexibility to 
-select the external blockchain of their choice for the light client.
+state or transactions without needing the complete external blockchain data.
 
 ## Project Structure
 
@@ -52,36 +51,25 @@ transaction data, which it then uses for its operations.
 ---
 
 The codebase has been structured to separate concerns, where the `lightclient` module handles the lower-level logic of 
-transaction verification, and the `foo` module uses this verification in higher-level application logic. Candidates 
-are expected to understand this distinction and work within this framework, ensuring that the separation of concerns 
-is maintained.
+transaction verification, and the `foo` module uses this verification in higher-level application logic. 
 
 ![diagram](diagram.png)
 
-## Tasks
-
-The tasks outlined below detail the expectations set for the candidate:
-
+## Goal
 
 ### `lightclient`
 
 **Transaction Verification:**
 Implement the `VerifyTx` Function: This is the heart of the light client operations. The exact structure and design 
-of `Proof` and `TxData` types are left to your discretion,
-granting you the freedom to choose an implementation that aligns best with your vision for the system. For example, 
-`TxData` can be left empty, serving solely to verify if a transaction hash is part of a block.
+of `Proof` and `TxData` types are left to your discretion.
 
 **Header Management:**
 Implement logic that facilitates the addition of headers into the blockchain store.
-You have the autonomy to determine the trust assumptions, and the method employed to include headers. As an example, 
-you might consider a permissioned approach where only an admin address has the authorization to add headers.
 
 
 ### `foo`
 
 Create a test application that leverages the `VerifyTx` function to validate transactions.
-Remember, while the tasks provide clear directives, the intention is also to observe your problem-solving approach, 
-creativity, and proficiency in developing a functional system.
 
 
 ## Additional Notes
